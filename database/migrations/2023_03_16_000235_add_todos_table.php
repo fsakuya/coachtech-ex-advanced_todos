@@ -14,10 +14,13 @@ class AddTodosTable extends Migration
     public function up()
     {
         Schema::table('todos', function (Blueprint $table) {
-            $table->bigInteger('user_id');
             $table->foreignId('user_id')
                 ->references('id')
                 ->on('users')
+                ->onDelete('cascade');
+            $table->foreignId('tag_id')
+                ->references('id')
+                ->on('tags')
                 ->onDelete('cascade');
         });
     }
@@ -30,7 +33,7 @@ class AddTodosTable extends Migration
     public function down()
     {
         Schema::table('todos', function (Blueprint $table) {
-            $table->dropColumn('user_id');
+            $table->dropColumn(['use_id', 'tag_id']);
         });
     }
 }

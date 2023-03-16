@@ -10,4 +10,10 @@ class Tag extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+
+    public function todos()
+    {
+        return $this->hasMany('App\Models\Todo');
+    }
 }
