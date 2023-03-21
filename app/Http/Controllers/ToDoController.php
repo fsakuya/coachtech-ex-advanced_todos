@@ -36,7 +36,7 @@ class TodoController extends Controller
             'content' => $request->input('content'),
             'tag_id' => $request->input('tag_id')
         );
-        dd($form);
+        // dd($form);
         unset($form['_token']);
         Todo::create($form);
         return redirect('/todos');
