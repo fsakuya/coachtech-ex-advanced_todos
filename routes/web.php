@@ -32,3 +32,7 @@ Route::get('/todos', [ToDoController::class, 'index'])->middleware('auth')->name
 Route::post('todos/create', [ToDoController::class, 'create'])->middleware('auth')->name('todos.create');
 Route::post('todos/update', [ToDoController::class, 'update'])->middleware('auth')->name('todos.update');
 Route::post('todos/delete', [ToDoController::class, 'delete'])->middleware('auth')->name('todos.delete');
+
+Route::get('todos/find', [ToDoController::class, 'find'])->middleware('auth')->name('todos.find');
+
+Route::post('todos/find', [ToDoController::class, 'find'])->middleware('auth')->name('todos.find');

@@ -15,10 +15,12 @@ class AddTodosTable extends Migration
     {
         Schema::table('todos', function (Blueprint $table) {
             $table->foreignId('user_id')
+                ->nullable()
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
             $table->foreignId('tag_id')
+                ->nullable()
                 ->references('id')
                 ->on('tags')
                 ->onDelete('cascade');

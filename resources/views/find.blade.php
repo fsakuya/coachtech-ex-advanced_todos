@@ -357,7 +357,7 @@
   <div class="container">
     <div class="card">
       <div class="card__header">
-        <p class="title mb-15">Todo List</p>
+        <p class="title mb-15">タスク検索</p>
         <div class="auth mb-15">
           @if (Auth::check())
           <p class="detail">{{$user->name}}でログイン中</p>
@@ -365,7 +365,6 @@
           <input class="btn btn-logout" type="submit" value="ログアウト">
         </div>
       </div>
-      <a class="btn btn-search" href="{{ route('todos.find') }}">タスク検索</a>
       @if(count($errors) > 0)
       <ul>
         @foreach($errors->all() as $error)
@@ -374,17 +373,18 @@
       </ul>
       @endif
       <div class="todo">
-        <form action="{{ route('todos.create') }}" method="post" class="flex between mb-30">
+        <form action="{{route('todos.find')}}" method="post" class="flex between mb-30">
           @csrf
           <input type="text" class="input-add" name="content">
           <select name="tag_id" class="select-tag">
+            <option disabled selected value>
             <option value="1">家事</option>
             <option value="2">勉強</option>
             <option value="3">運動</option>
             <option value="4">食事</option>
             <option value="5">移動</option>
           </select>
-          <input class="btn btn-add" type="submit" value="追加">
+          <input class="btn btn-add" type="submit" value="検索">
         </form>
         <table>
           <tr>
@@ -394,19 +394,20 @@
             <th>更新</th>
             <th>削除</th>
           </tr>
-          @foreach($todos as $todo)
+          @foreach($posts as $post)
           <tr>
             <td>
-              {{ $todo->created_at }}
+              {{ $post->created_at }}
             </td>
-            <form action="{{ route('todos.update', ['id' => $todo->id]) }}" method="post">
+            <form action="{{ route('todos.update', ['id' => $post->id]) }}" method="post">
               @csrf
               <td>
-                <input type="text" class="input-update" value="{{ $todo->content }}" name="content">
+                <input type="text" class="input-update" value="{{ $post->content }}" name="content">
               </td>
             </form>
             <td>
               <select name="tag_id" class="select-tag">
+                <option disabled selected value>
                 <option value="1">家事</option>
                 <option value="2">勉強</option>
                 <option value="3">運動</option>
@@ -419,7 +420,7 @@
               <button class="btn btn-update">更新</button>
             </td>
             <td>
-              <form action="{{ route('todos.delete', ['id' => $todo->id]) }}" method="post">
+              <form action="{{ route('todos.delete', ['id' => $post->id]) }}" method="post">
                 @csrf
                 <button class="btn btn-delete">削除</button>
               </form>
@@ -428,6 +429,7 @@
           @endforeach
         </table>
       </div>
+      <a class="btn btn-back" href="{{route('todos.index')}}">戻る</a>
     </div>
   </div>
 </body>
