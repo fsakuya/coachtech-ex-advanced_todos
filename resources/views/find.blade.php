@@ -373,11 +373,11 @@
       </ul>
       @endif
       <div class="todo">
-        <form action="{{route('todos.find')}}" method="post" class="flex between mb-30">
+        <form action="{{route('todo.search')}}" method="get" class="flex between mb-30">
           @csrf
           <input type="text" class="input-add" name="content">
           <select name="tag_id" class="select-tag">
-            <option disabled selected value>
+            <option value="" selected disabled></option>
             <option value="1">家事</option>
             <option value="2">勉強</option>
             <option value="3">運動</option>
@@ -394,25 +394,24 @@
             <th>更新</th>
             <th>削除</th>
           </tr>
-          @foreach($posts as $post)
+          @foreach($todos as $todo)
           <tr>
             <td>
-              {{ $post->created_at }}
+              {{ $todo->created_at }}
             </td>
-            <form action="{{ route('todos.update', ['id' => $post->id]) }}" method="post">
+            <form action="{{ route('todos.update', ['id' => $todo->id]) }}" method="post">
               @csrf
               <td>
-                <input type="text" class="input-update" value="{{ $post->content }}" name="content">
+                <input type="text" class="input-update" value="{{ $todo->content }}" name="content">
               </td>
             </form>
             <td>
               <select name="tag_id" class="select-tag">
-                <option disabled selected value>
-                <option value="1">家事</option>
-                <option value="2">勉強</option>
-                <option value="3">運動</option>
-                <option value="4">食事</option>
-                <option value="5">移動</option>
+                <option value="1" @if($todo->tag_id === 1) selected @endif>家事</option>
+                <option value="2" @if($todo->tag_id === 2) selected @endif>勉強</option>
+                <option value="3" @if($todo->tag_id === 3) selected @endif>運動</option>
+                <option value="4" @if($todo->tag_id === 4) selected @endif>食事</option>
+                <option value="5" @if($todo->tag_id === 5) selected @endif>移動</option>
               </select>
               </form>
             </td>
@@ -420,7 +419,7 @@
               <button class="btn btn-update">更新</button>
             </td>
             <td>
-              <form action="{{ route('todos.delete', ['id' => $post->id]) }}" method="post">
+              <form action="{{ route('todos.delete', ['id' => $todo->id]) }}" method="post">
                 @csrf
                 <button class="btn btn-delete">削除</button>
               </form>

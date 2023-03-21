@@ -18,4 +18,15 @@ class Todo extends Model
     {
         return $this->belongsTo('App\Models\Tag');
     }
+
+    public static function doSearch($input)
+    {
+        if (empty('keyword')) {
+            return Todo::where('tag_id', $input['tag_id'])
+                ->get();
+        } else {
+            return Todo::where('content', 'LIKE BINARY', "%{$input['keyword']}%")
+                ->get();
+        }
+    }
 }

@@ -35,7 +35,10 @@ class AddTodosTable extends Migration
     public function down()
     {
         Schema::table('todos', function (Blueprint $table) {
-            $table->dropColumn(['use_id', 'tag_id']);
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
+            $table->dropForeign(['tag_id']);
+            $table->dropColumn('tag_id');
         });
     }
 }

@@ -365,7 +365,7 @@
           <input class="btn btn-logout" type="submit" value="ログアウト">
         </div>
       </div>
-      <a class="btn btn-search" href="{{ route('todos.find') }}">タスク検索</a>
+      <a class="btn btn-search" href="{{ route('todo.find') }}">タスク検索</a>
       @if(count($errors) > 0)
       <ul>
         @foreach($errors->all() as $error)

@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ClientRequest;
+use App\Models\Tag;
 use App\Models\Todo;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+
+use function GuzzleHttp\Promise\all;
 
 class TodoController extends Controller
 {
@@ -69,22 +72,26 @@ class TodoController extends Controller
         return redirect('/todos');
     }
 
-    public function find(Request $request)
+    public function find()
+    {
+        $user = Auth::user();
+        $todos = array();
+        return view('find', compact('user', 'todos'));
+    }
+
+    public function search(Request $request)
     {
 
         $user = Auth::user();
-
-        /* Todoテーブルから全てのレコードを取得する */
-        $todos = Todo::query();
-
-        /* キーワードから検索処理 */
+        $tag_id = $request->input('tag_id');
         $keyword = $request->input('content');
+        $input = array(
+            'tag_id' => $tag_id,
+            'keyword' => $keyword
+        );
+        // dd($input);
+        $todos = Todo::doSearch($input);
 
-        if (!empty($keyword)) { //keyword　が空ではない場合、検索処理を実行します
-            $todos->where('content', 'LIKE', "%{$keyword}%");
-        }
-        $posts = $todos->get();
-
-        return view('find', ['posts' => $posts, 'user' => $user]);
+        return view('find', compact('user', 'todos'));
     }
 }
