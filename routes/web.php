@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\ToDoController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,20 +16,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
 
-// Route::resource('todos', TodoController::class);
-// Route::get('todos', [ToDoController::class, 'index'])->name('todos.index');
+Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth')->name('logout');
+
+
 Route::get('/todos', [ToDoController::class, 'index'])->middleware('auth')->name('todos.index');
 Route::post('todos/create', [ToDoController::class, 'create'])->middleware('auth')->name('todos.create');
 Route::post('todos/update', [ToDoController::class, 'update'])->middleware('auth')->name('todos.update');
