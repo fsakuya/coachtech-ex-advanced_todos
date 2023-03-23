@@ -7,15 +7,8 @@
         </x-slot>
 
         <!-- Validation Errors -->
-        <!-- <x-auth-validation-errors class="mb-4" :errors="$errors" /> -->
-        @if(count($errors) > 0)
-        <ul>
-            @foreach($errors->all() as $error)
-            <li>{{$error}}</li>
-            @endforeach
-        </ul>
-        @endif
-        <form method="POST" action="{{ route('register') }}">
+        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+        <form method="POST" action="{{ route('register') }}" novalidate>
             @csrf
 
             <!-- Name -->

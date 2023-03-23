@@ -360,7 +360,7 @@
         <p class="title mb-15">タスク検索</p>
         <div class="auth mb-15">
           @if (Auth::check())
-          <p class="detail">{{$user->name}}でログイン中</p>
+          <p class="detail">「{{$user->name}}」でログイン中</p>
           @endif
           <input class="btn btn-logout" type="submit" value="ログアウト">
         </div>

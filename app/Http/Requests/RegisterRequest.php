@@ -13,7 +13,7 @@ class RegisterRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,22 +26,21 @@ class RegisterRequest extends FormRequest
         return [
             'name' => 'required|string|max:191',
             'email' => 'required|email|min:8|max:191|unique:users',
-            'passoword' => 'required|min:8|max:191',
-            'password_confirmation' => 'required|min:8|max:191'
+            'password' => 'required|min:8|max:191|confirmed',
         ];
     }
-    public function messages()
-    {
-        return [
-            'name.required' => '名前を入力してください。',
-            'email.required' => 'メ ールアドレスを入力してください。',
-            'email.email' => 'メールアドレスの形式で入力してください',
-            'email.min' => 'メールアドレスは8文字以上で入力して下さい。',
-            'email.max' => 'メールアドレスは191文字以内で入力して下さい。',
-            'email.unique' => '入力のメールアドレスは既に登録済みです。',
-            'password.required' => 'パスワードを入力してください。',
-            'password.min' => 'パスワードは8文字以上で入力してください。',
-            'password.max' => 'パスワードは191文字以内で入力してください。',
-        ];
-    }
+    // public function messages()
+    // {
+    //     return [
+    //         'name.required' => '名前を入力してください。',
+    //         'email.required' => 'メ ールアドレスを入力してください。',
+    //         'email.email' => 'メールアドレスの形式で入力してください',
+    //         'email.min' => 'メールアドレスは8文字以上で入力して下さい。',
+    //         'email.max' => 'メールアドレスは191文字以内で入力して下さい。',
+    //         'email.unique' => '入力のメールアドレスは既に登録済みです。',
+    //         'password.required' => 'パスワードを入力してください。',
+    //         'password.min' => 'パスワードは8文字以上で入力してください。',
+    //         'password.max' => 'パスワードは191文字以内で入力してください。',
+    //     ];
+    // }
 }

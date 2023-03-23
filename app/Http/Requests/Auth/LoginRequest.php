@@ -90,17 +90,4 @@ class LoginRequest extends FormRequest
     {
         return Str::lower($this->input('email')) . '|' . $this->ip();
     }
-
-    public function messages()
-    {
-        return [
-            'email.required' => 'メ ールアドレスを入力してください。',
-            'email.email' => 'メールアドレスの形式で入力してください',
-            'email.min' => 'メールアドレスは8文字以上で入力して下さい。',
-            'email.max' => 'メールアドレスは191文字以内で入力して下さい。',
-            'password.required' => 'パスワードを入力してください。',
-            'password.min' => 'パスワードは8文字以上で入力してください。',
-            'password.max' => 'パスワードは191文字以内で入力してください。',
-        ];
-    }
 }

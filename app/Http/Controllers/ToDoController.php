@@ -85,12 +85,25 @@ class TodoController extends Controller
         $user = Auth::user();
         $tag_id = $request->input('tag_id');
         $keyword = $request->input('content');
-        $input = array(
-            'tag_id' => $tag_id,
-            'keyword' => $keyword
-        );
-        // dd($input);
-        $todos = Todo::doSearch($input);
+        // $input = array(
+        //     'tag_id' => $tag_id,
+        //     'keyword' => $keyword
+        // );
+        // $todos = Todo::doSearch($input);
+
+        if (null !== $tag_id and $keyword) {
+            $todos = Todo::where('tag_id', $tag_id)
+                ->where('content', 'LIKE BINARY', "%{$keyword}%")
+                ->get();
+        } elseif (!empty($tag_id)) {
+            $todos = Todo::where('tag_id', $tag_id)
+                ->get();
+        } else {
+            if (!empty($keyword)) {
+                $todos = Todo::where('content', 'LIKE BINARY', "%{$keyword}%")
+                    ->get();
+            }
+        }
 
         return view('find', compact('user', 'todos'));
     }
