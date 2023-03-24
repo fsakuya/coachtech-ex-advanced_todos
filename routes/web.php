@@ -26,11 +26,11 @@ use Illuminate\Support\Facades\Route;
 
 require __DIR__ . '/auth.php';
 
-Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+Route::get('/login', [AuthenticatedSessionController::class, 'create']);
 Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login');
-Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::get('/register', [RegisteredUserController::class, 'create']);
 Route::post('/register', [RegisteredUserController::class, 'store'])->name('register');
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->middleware('auth')->name('logout');
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 
 Route::get('/todos', [ToDoController::class, 'index'])->middleware('auth')->name('todos.index');

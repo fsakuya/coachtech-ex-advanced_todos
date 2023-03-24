@@ -21,7 +21,9 @@ class TodoController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $todos = Todo::all();
+        $user_id = Auth::id();
+        $todos = Todo::where('user_id', $user_id)->get();
+        // dd($todos);
         return view('index', ['todos' => $todos, 'user' => $user]);
     }
 
@@ -98,11 +100,11 @@ class TodoController extends Controller
         } elseif (!empty($tag_id)) {
             $todos = Todo::where('tag_id', $tag_id)
                 ->get();
+        } elseif (!empty($keyword)) {
+            $todos = Todo::where('content', 'LIKE BINARY', "%{$keyword}%")
+                ->get();
         } else {
-            if (!empty($keyword)) {
-                $todos = Todo::where('content', 'LIKE BINARY', "%{$keyword}%")
-                    ->get();
-            }
+            $todos = Todo::all();
         }
 
         return view('find', compact('user', 'todos'));
