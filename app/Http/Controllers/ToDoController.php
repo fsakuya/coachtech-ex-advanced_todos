@@ -42,7 +42,6 @@ class TodoController extends Controller
             'tag_id' => $request->input('tag_id')
         );
         // dd($form);
-        unset($form['_token']);
         Todo::create($form);
         return redirect('/todos');
     }
@@ -83,30 +82,43 @@ class TodoController extends Controller
 
     public function search(Request $request)
     {
-
-        $user = Auth::user();
+        $user_id = Auth::id();
         $tag_id = $request->input('tag_id');
         $keyword = $request->input('content');
-        // $input = array(
-        //     'tag_id' => $tag_id,
-        //     'keyword' => $keyword
-        // );
-        // $todos = Todo::doSearch($input);
 
-        if (null !== $tag_id and $keyword) {
-            $todos = Todo::where('tag_id', $tag_id)
-                ->where('content', 'LIKE BINARY', "%{$keyword}%")
+        if (isset($tag_id) && isset($keyword)) {
+            $user = Auth::user();
+            $todos = Todo::where('user_id', $user_id)
+                ->where('tag_id', $tag_id)
+                ->where('content', 'LIKE', "%{$keyword}%")
                 ->get();
-        } elseif (!empty($tag_id)) {
-            $todos = Todo::where('tag_id', $tag_id)
-                ->get();
-        } elseif (!empty($keyword)) {
-            $todos = Todo::where('content', 'LIKE BINARY', "%{$keyword}%")
-                ->get();
-        } else {
-            $todos = Todo::all();
+            return view('find', compact('user', 'todos'));
         }
 
-        return view('find', compact('user', 'todos'));
+
+        if (isset($keyword)) {
+            $user = Auth::user();
+            $todos = Todo::where('user_id', $user_id)
+                ->where('content', 'LIKE', "%{$keyword}%")
+                ->get();
+            return view('find', compact('user', 'todos'));
+        }
+
+        if (isset($tag_id)) {
+            $user = Auth::user();
+            $todos = Todo::where('user_id', $user_id)
+                ->where('tag_id', $tag_id)
+                ->get();
+            return view('find', compact('user', 'todos'));
+        }
+
+        if (!isset($tag_id) && !isset($keyword)) {
+            $user = Auth::user();
+            $todos = Todo::where('user_id', $user_id)
+                ->get();
+            return view('find', compact('user', 'todos'));
+        }
+        // dd($todos);
+
     }
 }

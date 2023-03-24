@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-widthz, initial-scale=1.0">
   <title>Todo</title>
-  <link rel="stylesheet" href="{{ asset('/css/style.css')  }}">
+  <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('/css/reset.css') }}">
 </head>
 
@@ -17,10 +17,6 @@
         <div class="auth mb-15">
           @if (Auth::check())
           <p class="detail">「{{$user->name}}」でログイン中</p>
-          @else
-          <p>
-            ログインしてください（<a href="/login">ログイン</a>｜<a href="/register">登録</a>）
-          </p>
           @endif
           <form method='post' action="{{ route('logout') }}">
             @csrf

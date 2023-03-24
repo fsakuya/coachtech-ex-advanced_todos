@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-widthz, initial-scale=1.0">
   <title>Todo</title>
-  <link rel="stylesheet" href="{{ asset('/css/style.css')  }}">
-  <link rel="recetsheet" href="{{ asset('/css/reset.css') }}">
+  <link rel="stylesheet" href="{{ asset('/css/style.css') }}">
+  <link rel="stylesheet" href="{{ asset('/css/reset.css') }}">
 </head>
 
 <body class="font-sans antialiased">
@@ -18,7 +18,10 @@
           @if (Auth::check())
           <p class="detail">「{{$user->name}}」でログイン中</p>
           @endif
-          <input class="btn btn-logout" type="submit" value="ログアウト">
+          <form method='post' action="{{ route('logout') }}">
+            @csrf
+            <input class="btn btn-logout" type="submit" value="ログアウト">
+          </form>
         </div>
       </div>
       @if(count($errors) > 0)
